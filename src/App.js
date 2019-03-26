@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ToDoList from './containers/ToDoList/ToDoList';
+import * as toDoItemsApiUrl from './helpers/toDoItemApi'
 
 class App extends Component {
+  state = {
+    tasks: null,
+    isLoading: true
+  }
+
+  componentDidMount = async () => {
+    const tasks = await toDoItemsApiUrl.getAll();
+    console.log(tasks);
+    this.setState({tasks, isLoading: false});
+  }
+
   render() {
+    const { isLoading, tasks } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      {isLoading && <div>Loading...</div>}
+      {!isLoading && tasks !== null &&
+        <ToDoList title="TODO List" tasks={tasks}/>
+      }
       </div>
     );
   }
