@@ -38,3 +38,8 @@ new Promise(
     })
   }
 )
+
+export const update = (url, body) =>
+new Promise(
+  (resolve, reject) => apiCall(url, 'PUT', body, resolve, reject)
+)

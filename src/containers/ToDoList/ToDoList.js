@@ -43,6 +43,13 @@ class ToDoList extends Component {
     this.setState({tasks: _.remove(index, 1, tasks)});
   }
 
+  toggleDone = async (id) => {
+    const { tasks } = this.state;
+    const { index, task } = this.findyById(id);
+    const response = await toDoItemApi.update(id, {done: !task.done});
+    this.setState({tasks: _.update(index, response, tasks)});
+  }
+
   render() {
     const { title } = this.props;
     const { tasks, draft } = this.state;
@@ -62,6 +69,7 @@ class ToDoList extends Component {
           key={task.id}
           deleteTask={this.deleteTask}
           text={task.title}
+          toggleDone={this.toggleDone}
           done={task.completed}/>
         )}
       </div>

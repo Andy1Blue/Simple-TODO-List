@@ -28,6 +28,8 @@ class ToDoItem extends Component {
   }
 
   toggleDone = () => {
+    this.props.toggleDone(this.props.id);
+    console.log("updating id:" + this.props.id);
     this.setState({done: !this.state.done});
   }
 
