@@ -31,10 +31,21 @@ class ToDoItem extends Component {
     this.setState({done: !this.state.done});
   }
 
+  deleteTask = () => {
+    this.props.deleteTask(this.props.id);
+    console.log("removing id:" + this.props.id);
+  }
+
   render() {
     const { text } = this.props;
     return (
-      <div className={this.state.done ? 'doneTodo' : ''} onClick={this.toggleDone}><p>{text}</p></div>
+      <div className={this.state.done ? 'doneTodo' : ''}>
+        <p>
+          {text}
+          <button onClick={this.toggleDone}>&#10004;</button>
+          <button onClick={this.deleteTask}>&#10006;</button>
+        </p>
+      </div>
     )
   }
 }

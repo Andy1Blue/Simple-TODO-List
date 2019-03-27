@@ -30,6 +30,19 @@ class ToDoList extends Component {
     this.setState({tasks: []});
   }
 
+  findyById = (id, arr) => {
+    const index = _.findIndex(_.propEq('id', id))(arr);
+
+    return { index, task: arr[index] }
+  }
+
+  deleteTask = async (id) => {
+    const { tasks } = this.state;
+    await toDoItemApi.remove(id);
+    const { index } = this.findyById(id, tasks);
+    this.setState({tasks: _.remove(index, 1, tasks)});
+  }
+
   render() {
     const { title } = this.props;
     const { tasks, draft } = this.state;
@@ -43,7 +56,14 @@ class ToDoList extends Component {
         onChange={this.updateDraft}
         draft={draft}
         />
-        {tasks.map(task => <ToDoItem text={task.title} done={task.completed}/>)}
+        {tasks.map(task =>
+          <ToDoItem
+          id={task.id}
+          key={task.id}
+          deleteTask={this.deleteTask}
+          text={task.title}
+          done={task.completed}/>
+        )}
       </div>
     )
   }
