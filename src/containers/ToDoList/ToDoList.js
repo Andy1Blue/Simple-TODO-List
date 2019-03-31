@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import ToDoItem from './../../components/ToDoList/ToDoItem';
 import ToDoForm from './../../components/ToDoList/ToDoForm';
+import * as toDoItemsApiUrl from './../../helpers/toDoItemApi';
 import * as toDoItemApi from './../../helpers/toDoItemApi';
 import * as _ from 'ramda';
 
 class ToDoList extends Component {
   state = {
-    tasks: this.props.tasks,
-    draft: ''
+    tasks: null,
+    draft: '',
+    isLoading: true,
+    title: 'TODO List'
+  }
+
+  componentDidMount = async () => {
+    const tasks = await toDoItemsApiUrl.getAll();
+    console.log(tasks);
+    this.setState({tasks, isLoading: false});
   }
 
   updateDraft = (e) => {
@@ -51,27 +60,31 @@ class ToDoList extends Component {
   }
 
   render() {
-    const { title } = this.props;
-    const { tasks, draft } = this.state;
+    const { title, tasks, draft, isLoading } = this.state;
     console.log(title);
     return (
       <div>
-        <h1>{title}</h1>
-        <button onClick={this.deleteAllTask}>Delete all tasks</button>
-        <ToDoForm
-        onSubmit={this.addTask}
-        onChange={this.updateDraft}
-        draft={draft}
-        />
-        {tasks.map(task =>
-          <ToDoItem
-          id={task.id}
-          key={task.id}
-          deleteTask={this.deleteTask}
-          text={task.title}
-          toggleDone={this.toggleDone}
-          done={task.completed}/>
-        )}
+        {isLoading && <div>Loading...</div>}
+        {!isLoading && tasks !== null &&
+        <div>
+          <h1>{title}</h1>
+          <button onClick={this.deleteAllTask}>Delete all tasks</button>
+          <ToDoForm
+          onSubmit={this.addTask}
+          onChange={this.updateDraft}
+          draft={draft}
+          />
+          {tasks.map(task =>
+            <ToDoItem
+            id={task.id}
+            key={task.id}
+            deleteTask={this.deleteTask}
+            text={task.title}
+            toggleDone={this.toggleDone}
+            done={task.completed}/>
+          )}
+          </div>
+        }
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../App.css';
+import { Link } from 'react-router-dom';
 
 class ToDoItem extends Component {
   constructor(props) {
@@ -39,13 +40,14 @@ class ToDoItem extends Component {
   }
 
   render() {
-    const { text } = this.props;
+    const { id, text } = this.props;
     return (
       <div className={this.state.done ? 'doneTodo' : ''}>
         <p>
           {text}
           <button onClick={this.toggleDone}>&#10004;</button>
           <button onClick={this.deleteTask}>&#10006;</button>
+          <button><Link to={`/edit/${id}`}>&#9998;</Link></button>
         </p>
       </div>
     )

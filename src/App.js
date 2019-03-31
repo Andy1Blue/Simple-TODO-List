@@ -1,29 +1,21 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import ToDoList from './containers/ToDoList/ToDoList';
-import * as toDoItemsApiUrl from './helpers/toDoItemApi';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import ToDoEditForm from './components/ToDoList/ToDoEditForm';
+import NotFound from './components/ToDoList/NotFound';
 
 class App extends Component {
-  state = {
-    tasks: null,
-    isLoading: true
-  }
-
-  componentDidMount = async () => {
-    const tasks = await toDoItemsApiUrl.getAll();
-    console.log(tasks);
-    this.setState({tasks, isLoading: false});
-  }
-
   render() {
-    const { isLoading, tasks } = this.state;
     return (
       <div className="App">
-      {isLoading && <div>Loading...</div>}
-      {!isLoading && tasks !== null &&
-        <ToDoList title="TODO List" tasks={tasks}/>
-      }
+        <Router>
+          <Switch>
+            <Route exact path='/' component={ToDoList} />
+            <Route exact path='/edit/:itemId' component={ToDoEditForm} />
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
       </div>
     );
   }
