@@ -3,11 +3,13 @@ import '../../App.css';
 import { get, update } from '../../helpers/toDoItemApi';
 import { Formik } from 'formik';
 import { withRouter } from 'react-router-dom';
+import * as _ from 'ramda';
 
 class ToDoEditForm extends Component {
   state = {
     toDoItem: null,
-    isLoading: false
+    isLoading: false,
+    disabled: false
   }
 
   itemId = () => this.props.match.params.itemId;
@@ -42,6 +44,12 @@ class ToDoEditForm extends Component {
                   errors.title = 'Do not use thats words!'
                 }
 
+                if(_.isEmpty(errors)) {
+                  this.setState({disabled: false});
+                } else {
+                  this.setState({disabled: true});
+                }
+
                 return errors;
               }}
               render={({
@@ -69,7 +77,7 @@ class ToDoEditForm extends Component {
                     checked={values.completed}
                   />
                   <br/>
-                  <button type='sumbit'>Update</button>
+                  <button type='sumbit' disabled={this.state.disabled}>Update</button>
                   <br/>
                   <div className="errorMsg">{errors.title}</div>
                 </form>
