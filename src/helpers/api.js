@@ -27,7 +27,19 @@ new Promise(
   (resolve, reject) => apiCall(url, 'POST', body, resolve, reject)
 )
 
-export const destroy = url =>
+export const remove = url =>
 new Promise(
-  (resolve, reject) =>
+  (resolve, reject) => {
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json; charset:utf-8'
+      }
+    })
+  }
+)
+
+export const update = (url, body) =>
+new Promise(
+  (resolve, reject) => apiCall(url, 'PUT', body, resolve, reject)
 )
