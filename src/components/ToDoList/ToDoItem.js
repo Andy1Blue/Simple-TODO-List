@@ -42,14 +42,16 @@ class ToDoItem extends Component {
   render() {
     const { id, text } = this.props;
     return (
-      <div className={this.state.done ? 'doneTodo' : ''}>
-        <p>
-          {text}
-          <button onClick={this.toggleDone}>&#10004;</button>
-          <button onClick={this.deleteTask}>&#10006;</button>
-          <button><Link to={`/edit/${id}`}>&#9998;</Link></button>
-        </p>
-      </div>
+          <div className='item'>
+            <div className={this.state.done ? 'doneTodo' : ''}>
+              <span className='itemTask'>{text}</span>
+                <div className='itemEdit'>
+                  <button className='completeButton' onClick={this.toggleDone}>&#10004;</button>
+                  <button className='deleteButton' onClick={this.deleteTask}>&#10006;</button>
+                  <Link to={`/edit/${id}`}><button className='editButton'>&#9998;</button></Link>
+                </div>
+          </div>
+        </div>
     )
   }
 }

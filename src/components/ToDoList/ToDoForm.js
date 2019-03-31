@@ -4,8 +4,8 @@ import '../../App.css';
 
   const ToDoForm = ({onChange, draft, onSubmit}) => (
         <div>
-          <input type="text" onChange={onChange} value={draft}/>
-          <button onClick={onSubmit}>Add</button>
+          <input className='addTaskInput' type='text' placeholder='Your ToDo item...' onChange={onChange} value={draft}/>
+          <button className='addTaskButton' onClick={onSubmit}>Add</button>
         </div>
   );
 

@@ -27,6 +27,7 @@ class NotFound extends Component {
       <div>
         <p>No match for <code>{location.pathname}</code></p>
         <p>Redirect in {counter} seconds!</p>
+        <p><Link to='/'>Back to home page</Link></p>
         {counter === 0 && <Redirect to='/' />}
       </div>
     )

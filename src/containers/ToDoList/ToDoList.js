@@ -4,6 +4,7 @@ import ToDoForm from './../../components/ToDoList/ToDoForm';
 import * as toDoItemsApiUrl from './../../helpers/toDoItemApi';
 import * as toDoItemApi from './../../helpers/toDoItemApi';
 import * as _ from 'ramda';
+import '../../App.css';
 
 class ToDoList extends Component {
   state = {
@@ -68,21 +69,23 @@ class ToDoList extends Component {
         {!isLoading && tasks !== null &&
         <div>
           <h1>{title}</h1>
-          <button onClick={this.deleteAllTask}>Delete all tasks</button>
+          <button className='deleteAllButton' onClick={this.deleteAllTask}>Delete all tasks</button>
           <ToDoForm
           onSubmit={this.addTask}
           onChange={this.updateDraft}
           draft={draft}
           />
+          <div className='itemConatiner'>
           {tasks.map(task =>
-            <ToDoItem
-            id={task.id}
-            key={task.id}
-            deleteTask={this.deleteTask}
-            text={task.title}
-            toggleDone={this.toggleDone}
-            done={task.completed}/>
+              <ToDoItem
+              id={task.id}
+              key={task.id}
+              deleteTask={this.deleteTask}
+              text={task.title}
+              toggleDone={this.toggleDone}
+              done={task.completed}/>
           )}
+          </div>
           </div>
         }
       </div>

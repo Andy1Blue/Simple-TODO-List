@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import '../../App.css';
 import { get, update } from '../../helpers/toDoItemApi';
 import { Formik } from 'formik';
+import { Link, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import * as _ from 'ramda';
+import '../../App.css';
 
 class ToDoEditForm extends Component {
   state = {
@@ -61,26 +63,31 @@ class ToDoEditForm extends Component {
                 handleSubmit,
                 isSubmitting
               }) => (
-                <form onSubmit={handleSubmit}>
-                  <input
-                    name='title'
-                    onChange={handleChange}
-                    value={values.title}
-                  />
-                  <br/>
-                  Completed?
-                  <input
-                    type='checkbox'
-                    name='completed'
-                    onChange={handleChange}
-                    value={values.completed}
-                    checked={values.completed}
-                  />
-                  <br/>
-                  <button type='sumbit' disabled={this.state.disabled}>Update</button>
-                  <br/>
-                  <div className="errorMsg">{errors.title}</div>
-                </form>
+                <div>
+                  <form className='editForm' onSubmit={handleSubmit}>
+                    <input
+                      className='editFormInput'
+                      name='title'
+                      onChange={handleChange}
+                      value={values.title}
+                    />
+                    <br/>
+                    Completed?
+                    <input
+                      className='editFormCheckbox'
+                      type='checkbox'
+                      name='completed'
+                      onChange={handleChange}
+                      value={values.completed}
+                      checked={values.completed}
+                    />
+                    <br/>
+                    <button className='editFormInput' type='sumbit' disabled={this.state.disabled}>Update</button>
+                    <br/>
+                    <div className="errorMsg">{errors.title}</div>
+                  </form>
+                  <p><Link to='/'>Back to home page</Link></p>
+                </div>
               )}
             />
           : <p>Loading...</p>
