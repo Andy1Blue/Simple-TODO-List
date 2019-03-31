@@ -45,7 +45,7 @@ class ToDoList extends Component {
 
   toggleDone = async (id) => {
     const { tasks } = this.state;
-    const { index, task } = this.findyById(id);
+    const { index, task } = this.findyById(id, tasks);
     const response = await toDoItemApi.update(id, {done: !task.done});
     this.setState({tasks: _.update(index, response, tasks)});
   }
