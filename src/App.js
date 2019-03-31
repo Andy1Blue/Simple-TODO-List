@@ -1,9 +1,31 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './App.css';
 import ToDoList from './containers/ToDoList/ToDoList';
 import ToDoEditForm from './components/ToDoList/ToDoEditForm';
 import NotFound from './components/ToDoList/NotFound';
+import Login from './components/ToDoList/Login';
+
+
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+  {...rest}
+  render={props =>
+    sessionStorage.getItem('currentUser') ? (
+      <Component {...props} />
+    ) : (
+      <Redirect
+        to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}
+      />
+    )
+  }
+  />
+);
 
 class App extends Component {
   render() {
@@ -12,7 +34,8 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path='/' component={ToDoList} />
-            <Route exact path='/edit/:itemId' component={ToDoEditForm} />
+            <PrivateRoute exact path='/edit/:itemId' component={ToDoEditForm} />
+            <Route exact path='/login' component={Login} />
             <Route component={NotFound} />
           </Switch>
         </Router>
