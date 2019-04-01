@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../../App.css';
 import { get, update } from '../../helpers/toDoItemApi';
 import { Formik } from 'formik';
+// eslint-disable-next-line
 import { Link, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import * as _ from 'ramda';
