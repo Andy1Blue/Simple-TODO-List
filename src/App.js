@@ -6,8 +6,7 @@ import ToDoList from './containers/ToDoList/ToDoList';
 import ToDoEditForm from './components/ToDoList/ToDoEditForm';
 import NotFound from './components/ToDoList/NotFound';
 import Login from './components/ToDoList/Login';
-
-
+import Navbar from './containers/ToDoList/Navbar';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -32,6 +31,7 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
+          <Navbar />
           <Switch>
             <Route exact path='/' component={ToDoList} />
             <PrivateRoute exact path='/edit/:itemId' component={ToDoEditForm} />
