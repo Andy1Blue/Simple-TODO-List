@@ -7,6 +7,7 @@ import ToDoEditForm from './components/ToDoList/ToDoEditForm';
 import NotFound from './components/ToDoList/NotFound';
 import Login from './components/ToDoList/Login';
 import Navbar from './containers/ToDoList/Navbar';
+import { CurrentUserProvider } from './context/CurrentUser.context'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -31,13 +32,15 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <Navbar />
-          <Switch>
-            <Route exact path='/' component={ToDoList} />
-            <PrivateRoute exact path='/edit/:itemId' component={ToDoEditForm} />
-            <Route exact path='/login' component={Login} />
-            <Route component={NotFound} />
-          </Switch>
+          <CurrentUserProvider>
+            <Navbar />
+            <Switch>
+              <Route exact path='/' component={ToDoList} />
+              <PrivateRoute exact path='/edit/:itemId' component={ToDoEditForm} />
+              <Route exact path='/login' component={Login} />
+              <Route component={NotFound} />
+            </Switch>
+          </CurrentUserProvider>
         </Router>
       </div>
     );
