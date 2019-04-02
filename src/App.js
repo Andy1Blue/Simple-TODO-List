@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import './App.css';
 import ToDoList from './containers/ToDoList/ToDoList';
 import ToDoEditForm from './components/ToDoList/ToDoEditForm';

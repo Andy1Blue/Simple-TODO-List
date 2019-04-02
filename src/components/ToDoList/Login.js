@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
   state = {
@@ -9,11 +9,11 @@ class Login extends Component {
     finished: false
   }
 
-  fbLogin = () => {
+  fbLogin = async () => {
     this.setState({processing: true});
     window.FB.getLoginStatus(response => {
       if(response.status !== 'connected') {
-        window.FB.login();
+       window.FB.login();
       } else {
         window.FB.api('/me', user => {
           console.log(user);
