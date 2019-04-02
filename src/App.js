@@ -7,22 +7,26 @@ import ToDoEditForm from './components/ToDoList/ToDoEditForm';
 import NotFound from './components/ToDoList/NotFound';
 import Login from './components/ToDoList/Login';
 import Navbar from './containers/ToDoList/Navbar';
-import { CurrentUserProvider } from './context/CurrentUser.context'
+import { CurrentUserProvider, CurrentUserConsumer } from './context/CurrentUser.context'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
   {...rest}
   render={props =>
-    sessionStorage.getItem('currentUser') ? (
-      <Component {...props} />
-    ) : (
-      <Redirect
-        to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}
-      />
-    )
+    <CurrentUserConsumer>
+    {({user}) => (
+      user ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }}
+        />
+      )
+    )}
+    </CurrentUserConsumer>
   }
   />
 );
