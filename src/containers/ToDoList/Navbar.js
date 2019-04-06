@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { CurrentUserConsumer } from '../../context/CurrentUser.context';
 import GoogleLogin from 'react-google-login';
-import { config } from '../../config';
+import { config } from '../../config/index';
 class Navbar extends Component {
   render() {
     return (
