@@ -1,37 +1,24 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../App.css';
 import { Link, Redirect } from 'react-router-dom';
 
-class NotFound extends Component {
-  state = {
-    counter: 5
-  }
+const NotFound = ({ location }) => {
+  const [counter, setCounter] = useState(10);
+  const countdown = () => setCounter(counter - 1);
 
-  componentDidMount = () => {
-    const intervalId = setInterval(this.countdown, 1000);
-    this.setState({intervalId});
-  }
+  useEffect(() => {
+    const id = setTimeout(countdown, 1000);
+    return () => clearTimeout(id);
+  }, [counter]);
 
-  countdown = () => {
-    this.setState({counter: this.state.counter - 1});
-  }
-
-  componentWillUnmount = () => {
-    clearInterval(this.state.intervalId);
-  }
-
-  render() {
-    const { location } = this.props;
-    const { counter } = this.state;
-    return (
-      <div>
-        <p>No match for <code>{location.pathname}</code></p>
-        <p>Redirect in {counter} seconds!</p>
-        <p><Link to='/'>Back to home page</Link></p>
-        {counter === 0 && <Redirect to='/' />}
-      </div>
-    )
-  }
+  return (
+    <div>
+      <p>No match for <code>{location.pathname}</code></p>
+      <p>Redirect in {counter} seconds!</p>
+      <p><Link to='/'>Back to home page</Link></p>
+      {counter === 0 && <Redirect to='/' />}
+    </div>
+  )
 }
 
 export default NotFound;
