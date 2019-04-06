@@ -62,7 +62,6 @@ class ToDoList extends Component {
 
   render() {
     const { title, tasks, draft, isLoading } = this.state;
-    console.log(title);
     return (
       <div>
         {isLoading && <div>Loading...</div>}
