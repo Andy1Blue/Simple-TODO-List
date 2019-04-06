@@ -4,33 +4,17 @@ const CurrentUserContext = React.createContext();
 
 export class CurrentUserProvider extends Component {
   state = {
-      user: null,
-      processing: false,
-      redirecting: false
+    user: null,
+    processing: false
   }
 
-  getUser = () => {
-    window.FB.api('/me', user => {
-      this.setState({user, processing: false, redirecting: true});
-    })
-  }
-
-  login = () => {
-    this.setState({processing: true});
-    window.FB.getLoginStatus(response => {
-      if(response.status === 'connected') {
-       this.getUser();
-      } else {
-        window.FB.api('/me', user => {
-          this.getUser();
-        })
-        // TODO: adding catch errors
-      }
-    })
+  responseGoogle = (response) => {
+    console.log(response);
+    this.setState({ user: response, processing: true });
   }
 
   logout = () => {
-     this.setState({ user: null});
+    this.setState({ user: null });
   }
 
   render() {
@@ -38,12 +22,12 @@ export class CurrentUserProvider extends Component {
     return (
       <CurrentUserContext.Provider
         value={{
-          login: this.login,
           logout: this.logout,
-          user: this.state.user
+          user: this.state.user,
+          responseGoogle: this.responseGoogle
         }}
       >
-         {children}
+        {children}
       </CurrentUserContext.Provider>
     )
   }
